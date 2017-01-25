@@ -1,0 +1,49 @@
+Maven helps with:
+ - Build process 
+ - Project structure
+ - Dependency management
+
+POM file(Project Object Model) xml file is a file that contains project information and 
+configuration details used to build the project:
+ - project dependencies
+ - plugins
+ - metadata
+POM can extend the Super POM.
+
+With Maven a project has build lifecycles and phases. 
+The build lifecycle is a process of building and distributing an aftifact(deplorable project)
+A phase is a step in the build lifecycle.
+Most important default phases:
+ - Validate
+ - Compile
+ - Test
+ - Package
+ - Install
+ - Deploy 
+For each step all previous steps are executed. For example if you do mvn install all steps
+before install will be executed.
+
+Maven provides standard directory lay out which provides consistency across the projects.
+src/main/java - Java source files go here
+src/main/resources - resources your application need are here
+src/main/filters - resources filters(properties files)
+src/main/config - configuration files
+src/main/webapp - web application directory for a WAR project
+src/test/java - test files
+src/test/resources - test resources 
+src/test/filters - test resource filter files
+src/site - files used to generate the Maven project website
+
+Dependency - a third party or project-local software library. 
+In Maven, a shared repository is used to store dependancies, the repository can be
+local(m2 in user directory) or remote, there is only one copy of it and it’s store outside the project.
+Dependancies are defined in the pom.xml. Maven reads pom.xml and automatically includes their required libraries.(if your project dependancies have their own dependancies - transitive dependancies, Maven takes care of them too).
+
+Dependencies have a scope which affects the class path used for various build tasks and can be defined for all dependencies. 
+There are 5 dependency scopes:
+ - Compile: available in all classpaths (default)
+ - Provided: the JDK or the container provides it
+ - Runtime: only required for execution not for compilation
+ - Test: only required for testing, not deployed 
+ - System: You provide it locally, not looked up in a repo
+
