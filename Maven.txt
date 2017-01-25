@@ -11,7 +11,7 @@ configuration details used to build the project:
 POM can extend the Super POM.
 
 With Maven a project has build lifecycles and phases. 
-The build lifecycle is a process of building and distributing an aftifact(deplorable project)
+The build lifecycle is a process of building and distributing an aftifact(deployable project)
 A phase is a step in the build lifecycle.
 Most important default phases:
  - Validate
@@ -23,14 +23,14 @@ Most important default phases:
 For each step all previous steps are executed. For example if you do mvn install all steps
 before install will be executed.
 
-Maven provides standard directory lay out which provides consistency across the projects.
-src/main/java - Java source files go here
-src/main/resources - resources your application need are here
+Maven provides standard directory lay out which provides consistency across the projects.(* indicates importance)
+* src/main/java - Java source files go here
+* src/main/resources - resources your application need are here
 src/main/filters - resources filters(properties files)
 src/main/config - configuration files
 src/main/webapp - web application directory for a WAR project
-src/test/java - test files
-src/test/resources - test resources 
+* src/test/java - test files
+* src/test/resources - test resources 
 src/test/filters - test resource filter files
 src/site - files used to generate the Maven project website
 
