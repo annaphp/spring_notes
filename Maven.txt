@@ -47,3 +47,10 @@ There are 5 dependency scopes:
  - Test: only required for testing, not deployed 
  - System: You provide it locally, not looked up in a repo
 
+How to install 
+
+1. Make sure JDK is installed 
+3. download Maven and point it to M2_HOME and MAVEN_HOME
+2. add JAVA_HOME M2_HOME MAVEN_HOME to you bash_profile file 
+4. Update PATH variable  
+
