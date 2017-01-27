@@ -49,8 +49,7 @@ There are 5 dependency scopes:
 
 How to install 
 
-1. Make sure JDK is installed 
-3. download Maven and point it to M2_HOME and MAVEN_HOME
-2. add JAVA_HOME M2_HOME MAVEN_HOME to you bash_profile file 
-4. Update PATH variable  
 
+1. download Maven and make sure JAVA_HOME is set
+2. in .bash_profile: add variables (M2_HOME and MAVEN_HOME) pointing to the maven installation
+3. in .bash_profile: update PATH variable  
