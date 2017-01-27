@@ -1,0 +1,17 @@
+Install Tomcat
+
+1. go to http://tomcat.apache.org/download-70.cgi and download tomcat
+2. save in application folder 
+3. make sure you have JAVA_HOME variable in .bash_profile file
+3. add in .bash_profile variables (CATALINA_HOME) pointing to the tomcat installation
+
+Apache Tomcat is a Java HTTP server which can run Java Servlet and Java Server Pages.
+It is also called a servlet container.
+To start: ./startup.sh to stop: ./shutdown.sh
+
+Tomcat installed directory has subdirectories:
+ - bin: contains startup/shutdown and other scripts
+ - conf: contains system-wide config files, like web.xml
+ - lib: Tomcat’s system-wide JAR files accessible by all webaps
+ - webapps: web apps to be deployed
+
