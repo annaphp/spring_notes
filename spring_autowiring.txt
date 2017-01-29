@@ -1,0 +1,25 @@
+Spring can automatically wire beans.
+Component scanning - Spring automatically discovers beans that should be created in the application context
+Autowiring - spring automatically wires beans (creates dependencies between objects)
+
+To define wiring specification you need to create a configuration class that would enable
+component scanning. The configuration class should be in the same package as your application beans otherwise the beans will not be scanned; or you can specify through basePackages={"beans”}, like this @ComponentScan(basePackages={"beans”}). @ComponentScan enables component scanning
+Example:
+
+@Configuration@ComponentScanpublic class AppConfig { }
+
+In have a class created as a bean and be scanned by component scanner it should be annotated with @Component, the bean will have a name of the class but starting with a lowercase letter
+Example:
+
+@Componentpublic class Pepper implements Vegetable {... } 
+To annotate beans to be automatically wired use @Autowired before the constructor(it means Spring will instantiate the bean via the constructor)
+Example:
+
+@Componentpublic class Pepper implements Vegetable {  private String name;
+  @Autowired  public Pepper(String name) {    this.name = name;  }
+
+You can use @Autowired on setters
+Example:
+@Autowiredpublic void setName(String name) {  this.name = name;}
+
+If you have two components of the same type you have to use @Qualifier(“name of the bean”) with @Autowired annotation to specify which bean exactly you want to be wired, otherwise too ambiguous for Spring
