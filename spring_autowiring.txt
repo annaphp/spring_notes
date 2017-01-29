@@ -14,16 +14,18 @@ To have a class created as a bean and be scanned by component scanner it should 
 Example:
 
 @Componentpublic class Pepper implements Vegetable {} - Autowiring -
-To annotate beans to be automatically wired use @Autowired before the constructor(it means Spring will instantiate the bean via the constructor)
+
+To autowire beans use @Autowire on constructor (Spring will pass dependancy as a parameter to the constructor).
 Example:
 
 @Component
 public class CDPlayer implements MediaPlayer {  private CompactDisc cd;
   @Autowired  public CDPlayer(CompactDisc cd) {    this.cd = cd;  }
 
-You can use @Autowired on setters
+You can use @Autowired on setters.
 Example:
 
 @Autowiredpublic void setCompactDisc(CompactDisc cd) {  this.cd = cd;}
 
-If you have two components of the same type you have to use @Qualifier(“name of the bean”) with @Autowired annotation to specify which bean exactly has to be wired, otherwise Spring cannot determine which bean should be wired.
+If you have two components of the same type you have to use @Qualifier(“name of the bean”) with @Autowired annotation 
+to specify which bean exactly has to be wired, otherwise Spring cannot determine which bean should be wired.
