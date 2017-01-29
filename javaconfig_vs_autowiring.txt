@@ -1,0 +1,25 @@
+JavaConfig VS. Autowiring and ComponentScan
+
+
+JavaConfig allows us to use java to define beans and their dependencies in a separate 
+class annotated with @Configuration annotation. Inside of this class we define methods that create and return beans to be registered in the application context.
+
+@Bean annotation is used to register a bean, the name of the bean is derived from the method name, and type of the bean from the return type of the method.
+
+@Bean 
+public Team Cubs{
+	return new Cubs();
+}
+
+The dependencies can be defined through constructor, setter or a combination of them.
+To define a dependency declare the dependency as a parameter to the @Bean annotated method.
+
+
+Autowiring and ComponentScan 
+
+To enable Autowiring and Scan Component you have to create a java configuration class and 
+mark it with @Configuration annotation and @ComponentScan to tell Spring to perform component scan. 
+Then class, which instance you want to have as a bean, should be marked with @Component annotation.
+To create dependencies @Autowired is used, it can be placed on a constructor or a setter method. @Autowired indicates to Spring that there is a dependency it has to satisfy.
+
+You don’t need to use @Autowired and @Component in JavaConfig method.
