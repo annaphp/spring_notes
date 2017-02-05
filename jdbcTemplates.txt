@@ -1,0 +1,83 @@
+Spring application using JdbcTemplate
+
+Application Structure:
+src/main/java
+   config/AppConfig.java 
+   model/YourModel.java
+   repo/YourModelRepository.java
+	
+
+To enable JdbcTemplate in your application the following steps have to be completed:
+- set up required dependencies
+- define Datasource bean in Spring dependency config file
+  DataSource represents a database, it has a connection pool which contains a set of 
+  connections. The connections always remain open and when they are not used 
+  they are placed back into the connection pool to be available for other requests.
+  DataSouce requires jdbc driver, database url, database username and password, connection pool initial
+  and maximum size.
+- create Repository class for your model with JdbcTemplate field
+
+Dependencies:
+Required dependencies in pom.xml:
+  <dependencies>
+  <dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.6</version>
+  </dependency>
+  
+  <dependency>
+    <groupId>commons-dbcp</groupId>
+    <artifactId>commons-dbcp</artifactId>
+    <version>1.2.2</version>
+  </dependency>
+  </dependencies>
+
+Spring Java Configuration.
+DataSource bean should be defined in your javaconfig file. 
+
+public BasicDataSource dataSource() {  
+	BasicDataSource ds = new BasicDataSource();
+	ds.setDriverClassName("com.mysql.jdbc.Driver");
+	ds.setUrl("jdbc:mysql://localhost:3306/test");
+	ds.setUsername(“username);
+	ds.setPassword(“username”);	 
+	ds.setInitialSize(5); // initial size of connections in connection pool
+	ds.setMaxActive(20); // max size of connection in connection pool
+        return ds;  
+}
+
+the dataSource bean will be used late by your model repository class to instantiate 
+JdbcTemplate.
+
+ModelRepository class:
+ModelRepository class is a place where your application connects to the database using JdbcTemplate and where CRUD operations are performed. JdbcTemplate uses RowMapper interface to map database columns to objects fields.
+
+Example:
+
+public class MyModeRepository{
+   private JdbcTemplate jdbc;
+
+   public MyModelRepository(DataSource ds){
+         jdbc = new JdbcTemplate(ds);
+   }
+
+public List<Quote> findAll(){
+   return this.jdbc.query(
+	"select * from quote",
+	 //lambda expression - equivalent of what is commented out below
+	 //RowMapper maps db rows with object fields and returns an object
+	 (ResultSet rs, int rowNum) -> { return 
+             new Quote(rs.getString("quote"),rs.getString("attributedTo"));});
+								
+	//new RowMapper<Quote>(){
+	//@Override
+	//public Quote mapRow(ResultSet rs, int rowNum)throws SQLException {
+	//		Quote q = new Quote(rs.getString("quote"), rs.getString("attributedTo"));
+	//		return q;
+	//		}
+	//}	
+}
+
+
+
