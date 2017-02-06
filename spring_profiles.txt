@@ -1,0 +1,27 @@
+Spring Profiles
+Your application can have environment-specific beans (production, testing, development).
+Spring can determine at runtime which beans should be created using profiles.
+Spring profile represents a certain environment and determines which beans should be
+created for that specific environment.
+
+To use profiles, you must gather all the bean definitions into one or more profiles
+and then make sure the proper profile is active when your application is deployed in
+each environment.
+
+In Java configuration @Profile(“name”) is used to specify which profile a bean belongs to. In Spring you can use @Profile annotation at the class level, or the method level, together with the @Bean annotation.
+Using @Profile annotation at method level allows you to have all beans at the same 
+Java configuration file.
+
+Any bean that is not given a profile will always be created, regardless of what profile
+is active.
+
+To define profiles in XML configuration:
+<?xml version="1.0" encoding="UTF-8"?><beans xmlns="http://www.springframework.org/schema/beans"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xmlns:jdbc="http://www.springframework.org/schema/jdbc"  xsi:schemaLocation="    http://www.springframework.org/schema/jdbc    http://www.springframework.org/schema/jdbc/spring-jdbc.xsd    http://www.springframework.org/schema/beans    http://www.springframework.org/schema/beans/spring-beans.xsd"   profile="dev">
+All files that are defined in this xml configuration file will belong to “dev”
+environment.
+
+Activating profiles:
+There are two separate properties used to determine which profiles are active:
+spring.profiles.active and spring.profies.default. If spring.profiles.active is set then
+its value determines which profiles are active, otherwise spring looks at spring.priles.deault.If neither of these properties are set then only those beans that
+are not defined as being in a profile are created.
