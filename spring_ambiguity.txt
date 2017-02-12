@@ -1,0 +1,53 @@
+Spring Autowiring Ambiguity
+
+When there are more then one matching bean, Spring cannot autowire a bean due to ambiguity.
+For example, if we have Team interface and two classes (RedSox and Cubs) implementing this interface, then when doing dependency injection in the below method, it would not be clear which bean exactly has to be autowired.
+
+@Autowired
+public void setAwayTeam(Team team) {
+    awayTeam=team;
+} 
+
+###################################################################
+To avoid autowiring ambiguity use @Primary or Qualifier(“beanName”)
+
+
+########
+@Primary - put @Primary annotation when declaring a bean. 
+
+It can be used: 
+* alongside @Bean in Java Config or 
+* alongside @Component for beans that are component-scanned. 
+
+A bean that is annotated as primary will be chosen by Spring over any other bean of the same type.
+
+Example:
+
+@Component
+@Primary
+public class RedSox implements Team{
+
+  public String getName() {
+	return "RedSox";
+   }
+
+}
+OR in Java Configuration:
+
+@Bean
+@Primary
+public Team redSox(){
+   return new RedSox();
+}
+
+##########
+@Qualifier - is used with @Autowired when defining dependencies.
+@Qualifier needs the ID of the bean that you want to inject.
+
+Example:
+
+@Autowired
+@Qualifier(“redSox”)
+public void setAwayTeam(Team team) {
+    awayTeam=team;
+} 
