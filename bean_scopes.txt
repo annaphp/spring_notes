@@ -1,0 +1,8 @@
+Spring Beans Scope
+
+Beans Scopes:
+
+ - Singleton - one per container
+ - Prototype - one per reference
+ - Session - exists only during a web session
+ - Request - exists only during a HTTP Request
