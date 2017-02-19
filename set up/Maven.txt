@@ -34,21 +34,20 @@ src/test/resources - test resources
 src/test/filters - test resource filter files
 src/site - files used to generate the Maven project website
 
-Dependency - a third party or project-local software library. 
+Dependency - a third party or a project-local software library. 
 In Maven, a shared repository is used to store dependancies, the repository can be
-local(m2 in user directory) or remote, there is only one copy of it and it’s store outside the project.
+local(.m2 in user directory) or remote, there is only one copy of it and it’s stored outside of the project.
 Dependancies are defined in the pom.xml. Maven reads pom.xml and automatically includes their required libraries.(if your project dependancies have their own dependancies - transitive dependancies, Maven takes care of them too).
 
 Dependencies have a scope which affects the class path used for various build tasks and can be defined for all dependencies. 
 There are 5 dependency scopes:
  - Compile: available in all classpaths (default)
- - Provided: the JDK or the container provides it
+ - Provided: the JDK or the container provides it.
  - Runtime: only required for execution not for compilation
  - Test: only required for testing, not deployed 
  - System: You provide it locally, not looked up in a repo
 
 How to install 
-
 
 1. download Maven and make sure JAVA_HOME is set
 2. in .bash_profile: add variables (M2_HOME and MAVEN_HOME) pointing to the maven installation

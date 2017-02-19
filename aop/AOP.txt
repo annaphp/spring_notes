@@ -1,0 +1,26 @@
+Aspect Orienter Programming (AOP) in Spring.
+
+AOP helps to modularize cross-cutting concerns (any functionality that affects multiple points of the application and is not business logic of the class, for example logging or security)
+
+AOP Terminology:
+ - Aspect - a combination of advice and pointcuts encapsulated in a class.
+
+ - Joinpoints are all possible points during the execution of a program where an advice can be applied. 
+
+ - Pointcuts - collection of join points, where exactly advice should be run.
+
+ - Advice - is a method that is run at particular joinpoint, in other words what code and when it should be run. There 5 kinds of advice:
+ * Before - advice is called before the advised method is envied
+ * After - advice is called after the advised method completes, regardless whether the method completion was successful or not.
+ * After-returning - after the the advised method successfully completes.
+ * After-throwing - after the advised method throws an exception.
+ * Around - advice wraps the advised method, before and after the advised method is invoked.
+
+ - Introduction - allows to add new methods or attributes to existing classes without changing them.
+
+Spring aspects are implemented as proxies that wrap the target object 
+(the object that does business logic). 
+The proxy handles method calls, performs additional aspect logic and then calls the target method.
+
+To define an aspect in Spring use @Aspect annotation
+To enable AOP in JavaConfig use @EnableAspectJAutoProxy annotation

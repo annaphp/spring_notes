@@ -11,6 +11,8 @@ public Team Cubs{
 	return new Cubs();
 }
 
+To rename bean - @Bean(name = “name”)
+
 The dependencies can be defined through constructor, setter or a combination of them.
 To define a dependency declare the dependency as a parameter to the @Bean annotated method.
 
