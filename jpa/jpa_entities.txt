@@ -1,54 +1,68 @@
- - JPA Entities - 
+#####
+JPA Entities
+#####
 
 In order to save an object in db its class should be annotated with @Entity.
 Each class annotated with @Entity will be used to build a table in db to save objects of that class. 
 
 Class name will be used to name a table and class fields will be used to name table columns. 
 To rename a table column use @Colum(name=“name”);
-Example:
-@Entity
-public class Shoe {
 
-  @Column(name=“shoe.colour”)
-  private String colour;
-}
+Example:
+	@Entity
+	public class Shoe {
+
+	  @Column(name=“shoe_colour”)
+	  private String colour;
+
 
 To specify primary key of an entity annotate id field with @Id annotation:
-@Entity
-public class Shoe{
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
-}
+
+	@Entity
+	public class Shoe{
+    		@Id
+    		@GeneratedValue(strategy=GenerationType.IDENTITY)
+    		private long id;
+
 @GeneratedValue(strategy=GenerationType.IDENTITY) - means ids will be automatically generated.
 
-- Entities and Collections -
 
-Entities may have collection(List, Map, Set) properties. A collection can be a primitive type collection or 
-it can be a collection of objects. 
+#####
+Entities and Collections
+#####
 
-An entity can use at @ElementCollection to save a collection of basic Java types(String,int).
+Entities may have collections (List, Map, Set) as their properties.
+
+An entity can use at @ElementCollection to save a collection of basic Java types(String, Integer).
+
 Example:
-@Column(name="shoe_size")
-@ElementCollection(fetch=FetchType.EAGER)
-private Map<String, String> size = new HashMap<>();
+	@Column(name="shoe_size")
+	@ElementCollection(fetch=FetchType.EAGER)
+	private Map<String, String> size = new HashMap<>();
 
 An entity can use @ElementCollection and @Embeddable to save a collection of embeddable objects
+
+
 Example:
-@ElementCollection(fetch=FetchType.EAGER)
+	@ElementCollection(fetch=FetchType.EAGER)
 	private List<Insole> insole = new ArrayList<>() ;
+
 Insole class has to be annotated with @Embeddable.
 
-@ElementCollection can have lazy and eager fetch type. Eager fetch type means that collection objects are loaded into the memory when the entity with which the collection is associated is loaded. When lazy loading is
-used collection objects are not loaded into the memory. To be able to load the collection objects a session must stay open when collection objects are used.
-Example:
 
- public static Shoe findShoeById(long id) {
+@ElementCollection can have lazy and eager fetch type. 
+
+## Eager fetch type means that collection objects are loaded into the memory when the entity with which the collection is associated is loaded. 
+## When lazy loading is used collection objects are not loaded into the memory. To be able to load the collection objects a session must stay open when collection objects are used.
+
+Example:
+public static void printInsoles(long id) {
         Session session = sessionFactory.openSession();
         Shoe shoe = session.get(Shoe.class,id);  
-        for(Insole i : shoe.getInsole()){
-          System.out.println(i);
+        for(Insole i : shoe.getInsoles()){
+           System.out.println(i);
         }
         session.close();
-        return shoe;
 }
+
+
