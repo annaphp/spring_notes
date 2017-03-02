@@ -1,0 +1,49 @@
+
+############## Unidirectional:
+
+The entity with the annotation owns the relationship.
+Owning side gets updated after creating relationship.
+Objet navigation is one way.
+
+@OneToOne
+One Entity has @OneToOne annotation and it has a reference to another entity, the other
+Entity doesn’t have a reference back. 
+
+@OneToMany
+One entity has @OneToMany annotation and it has a collection of other entities.
+Entity that has @OneToMany annotation owns the relationship.
+
+@ManyToOne
+One entity has @ManyToOne annotation and it has a reference to another entity.
+Entity that has @ManyToOne annotation owns the relationship.
+
+@ManyToMany
+One entity has @ManyToMany annotation and a collection of other entities.
+Entity that has @ManyToMany annotation owns the relationship.
+
+############# Bidirectional:
+
+What to update after creating relations?
+The side that owns the relationships gets updated after creating relations
+
+How to declare owner? 
+The side that has the annotation and doesn’t have mappedby is the relationship owner
+
+What is inverse?
+The entity that does’t own the relationship. It has ‘mappedBy’ 
+
+Who is the owner in bidirectional @ManyToOne?
+Many is the relationship owner in bidirectional @ManyToOne
+
+@OneToOne
+Each entity has @OneToOne annotation and they have a reference to each other.
+You decide who owns the relationship, by adding mappedBy to inverse.
+
+@ManyToOne - @OneToMany
+One side has @OneToMany annotation and a collection of the Many side entities.
+Many side has @ManyToOne annotation and a reference to a One side.
+Many side owns the relationship.
+
+@ManyToMany
+Each entity has a @ManyToMany annotation and a collection of other entities.
+You decide who owns the relationship, by adding mappedBy to inverse.
