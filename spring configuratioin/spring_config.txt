@@ -2,7 +2,7 @@ Dependency Ingection in Spring with JavaConfig
 Spring creates a container/context for beans, each bean is created once(singleton) only even if you use it in different places in your application.
 JavaConfig is one of the ways to define dependencies in Spring.
 
-It possible to have more that one javaconfig file for an application and you can also import one configuration file into another.
+It’s possible to have more that one javaconfig file for an application and you can also import one configuration file into another.
 
 Use @Configuration annotation to define a java class as a configuration class
 

@@ -13,8 +13,7 @@ To enable JdbcTemplate in your application the following steps have to be comple
   DataSource represents a database, it has a connection pool which contains a set of 
   connections. The connections always remain open and when they are not used 
   they are placed back into the connection pool to be available for other requests.
-  DataSouce requires jdbc driver, database url, database username and password, connection pool initial
-  and maximum size.
+  DataSouce requires jdbc driver, database url, database username and password, connection pool initial and maximum size.
 - create Repository class for your model with JdbcTemplate field
 
 Dependencies:
@@ -47,7 +46,7 @@ public BasicDataSource dataSource() {
         return ds;  
 }
 
-the dataSource bean will be used late by your model repository class to instantiate 
+the dataSource bean will be used later by your model repository class to instantiate 
 JdbcTemplate.
 
 ModelRepository class:

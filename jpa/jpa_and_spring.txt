@@ -1,0 +1,114 @@
+Spring and JPA API
+
+To be able to use JPA with Spring an entity manager factory bean should be defined
+in Spring application context.
+
+EntityManagerFactory gives you an instance of an EntityManager. 
+There two kinds of entity managers in JPA:
+
+ - Application-managed - entity managers are directly created in the application 
+   from an entity manager factory. The application is responsible for opening and closing 
+   entity managers.
+ - Container-managed - entity managers are created and managed by a Java EE container.
+   The application doesn’t interact with the entity manager factory, the entity managers
+   are obtained through injection.
+
+ Spring manages both types of entity managers (it plays a role of an application for an 
+ application-managed entity manager, or role of a container if it’s container-managed 
+ entity manager). 
+
+
+
+ === Application-managed Entity Manager Configuration ===
+
+Application-managed entity manager factory is configured in persistence.xml file which
+must be placed in META-INF directory in the classpath.
+persistence.xml defines persistence units(classes), data source and XML based mapping files.
+Example:
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"      version="1.0">    <persistence-unit name="spitterPU">      <class>com.habuma.spittr.domain.Spitter</class>      <class>com.habuma.spittr.domain.Spittle</class>      <properties>        <property name="toplink.jdbc.driver"            value="org.hsqldb.jdbcDriver" />        <property name="toplink.jdbc.url" value=            "jdbc:hsqldb:hsql://localhost/spitter/spitter" />        <property name="toplink.jdbc.user"            value="sa" />        <property name="toplink.jdbc.password"            value="" />      </properties>    </persistence-unit>  </persistence>
+
+Then you need to declare LocalEntityManagerFactoryBean in config file:
+@Beanpublic LocalEntityManagerFactoryBean entityManagerFactoryBean() {  LocalEntityManagerFactoryBean emfb      = new LocalEntityManagerFactoryBean();  emfb.setPersistenceUnitName("spitterPU");  return emfb;}
+
+=== Container-managed entity manager configuration ===
+
+Container-managed entity and data-source details are configured in JavaConfig(Spring application context).
+
+Example:
+
+public class Config {
+	
+	@Bean 
+	public DataSource dataSource() {  
+		BasicDataSource ds = new BasicDataSource();
+		ds.setDriverClassName("com.mysql.jdbc.Driver");
+		ds.setUrl("jdbc:mysql://localhost:3306/practice");
+		ds.setUsername("root");
+	    ds.setPassword("root");	 
+	    ds.setInitialSize(5);
+	    ds.setMaxActive(10);
+		return ds;  
+	}
+	
+	@Bean
+//jpaVendorAdapter property for entity manager provides specifics about the particular JPA
+  implementation,here we are using Hibernate as JPA implementation
+	public JpaVendorAdapter jpaVendorAdapter(){
+		HibernateJpaVendorAdapter adapter =new HibernateJpaVendorAdapter();
+		adapter.setShowSql(true);
+		adapter.setGenerateDdl(true);
+		adapter.setDatabase(Database.MYSQL);
+		return adapter;
+	}
+	
+	@Bean
+//entity manager bean will scan the model package for class that are annotated with @Entity
+//this is why with LocalContainerEntityManagerFactoryBean you don’t need to declare them in
+// persistence.xml and don’t need to use persistence.xml at all
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource ds,
+			JpaVendorAdapter jva){
+		Properties props = new Properties();
+		props.setProperty("hibernate.format_sql", String.valueOf(true));
+		LocalContainerEntityManagerFactoryBean emf = 
+				new LocalContainerEntityManagerFactoryBean();
+		emf.setDataSource(ds);
+		emf.setPackagesToScan("model");
+		emf.setJpaVendorAdapter(jva);
+		emf.setJpaProperties(props);
+		return emf;
+	}
+	
+	@Bean
+	public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
+		return new JpaTransactionManager(emf);
+	}
+	
+	@Bean
+	public BeanPostProcessor persistentTranslation(){
+		return new PersistenceExceptionTranslationPostProcessor();
+	}
+	
+	@Bean
+	public PersistenceAnnotationBeanPostProcessor paPostProcessor() {
+		return new PersistenceAnnotationBeanPostProcessor();
+        }
+
+}
+
+To get Entity manager in a repository:
+
+The repository class should be annotated with @Repository and @Transactional
+
+@PersistentContext 
+private EntityManager em;
+
+@PersistentContext is JPA annotation not Spring annotation, this is why in configuration file
+we need to declare PersistenceAnnotationBeanPostProcessor
+
+
+
+
+
+ 
+
