@@ -12,8 +12,8 @@ Example:
 	@Entity
 	public class Shoe {
 
-	  @Column(name=“shoe_colour”)
-	  private String colour;
+	@Column(name=“shoe_colour”)
+	private String colour;
 
 
 To specify primary key of an entity annotate id field with @Id annotation:
@@ -26,22 +26,29 @@ To specify primary key of an entity annotate id field with @Id annotation:
 
 @GeneratedValue(strategy=GenerationType.IDENTITY) - means ids will be automatically generated.
 
+#####
+Entities and @Embeddable
+#####
+
+An entity can have a field of type annotated with @Embeddable. This field must have @Embedded applied to it.
+
+	@Embedded
+	private Address address;
 
 #####
 Entities and Collections
 #####
 
-Entities may have collections (List, Map, Set) as their properties.
+Entities may have collection (List, Map, Set) of **@Embeddebles or basic Java types(ie String) ONLY** as their properties.
 
-An entity can use at @ElementCollection to save a collection of basic Java types(String, Integer).
+An entity can use @ElementCollection to save a collection of **basic Java types(String, Integer)**.
 
 Example:
 	@Column(name="shoe_size")
 	@ElementCollection(fetch=FetchType.EAGER)
 	private Map<String, String> size = new HashMap<>();
 
-An entity can use @ElementCollection and @Embeddable to save a collection of embeddable objects
-
+An entity can use @ElementCollection and @Embeddable to save a collection of **@Embeddable** objects
 
 Example:
 	@ElementCollection(fetch=FetchType.EAGER)
