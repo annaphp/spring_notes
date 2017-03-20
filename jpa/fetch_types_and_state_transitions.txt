@@ -1,0 +1,21 @@
+=== Lazy and Eager Loding in JPA ===
+
+When creating an application you have to determine your default data loading type or
+in other words default fetch plan. JPA default fetch type for one side is eager and for many side is lazy.A recommended type for all entities and collections
+is lazy loading. Lazy loading loads only the data that is being accessed while the session
+is open. If you try to access the data that was not loaded during the session an exception
+will be thrown. Lazily loaded collections in JPA are wrapped in proxies which are essentially placeholders. With lazy loading each collection item is not initialized and 
+is not loaded into the memory.
+
+If you want your collection to be loaded into the memory you need to load it manually using queries or change fetch type to eager. (fetch = FetchType.Eager). However, if you’re
+loading several collections eager loading should be avoided as it might lead to performance problems (result set will be big and will contain redundant data). 
+
+A proper way to load an entity and it’s collection is to use join fetch in the query as below:
+	SELECT e FROM Employee e LEFT JOIN FETCH e.address  
+
+=== Cascading state transitions ===
+
+When an entity instance changes it’s state, for example from transient to persistent, 
+it’s associated entity instances may also be included in this state transition - this is 
+called cascading state transitions. To enable cascading state transitions specify CascadeType, there is a number of cascading options available the most commonly used are 
+CascadeType.PERSIST(saves all associated entities) and CascadeType.REMOVE (deletes all associated entities).
