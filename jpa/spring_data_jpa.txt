@@ -1,0 +1,26 @@
+Spring Data JPA
+
+Spring Data JPA allows to create automatic repository and no implementation is needed
+by the developer. 
+To enable Spring automatic repository create your a repository interface for your entity
+class that has to extend JpaRepository.
+Example:
+//no other code or annotations needed
+public interface BookRepository         extends JpaRepository<Spitter, Long> {}
+
+To ask Spring Data to create an implementation of BookRepository, you need to add a the following in Spring configuration file.
+XML Config:
+
+<jpa:repositories base-package=“repository” />
+
+Java Config:
+
+@Configuration@EnableJpaRepositories(basePackages=“repository”)public class Configuration { }
+
+JpaRepository provides you 18 standard methods that are used by all applications (CRUD operations and etc.) The repository implementation is generated at application startup time as the Spring’s application context is being created.
+It’s possible to add custom methods to a repository. To create a custom method you just need to
+declare a method in the repository following Spring data method name pattern(Spring looks
+at the method name and return type to create a query).Spring data also allows you to add custom queries to your repository.
+Example:
+
+@Query("select b from Book b where b.name like ‘%adventures’”)List<Book> findAllAdventureBooks();

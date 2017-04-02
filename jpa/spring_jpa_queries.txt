@@ -1,0 +1,60 @@
+SPRING JPA QUERIES
+
+JPQL - JPA has its own language to create queries, it’s like SQL but it works with entities and its fields not tables and column names.
+
+Types of JPA Queries:
+
+ - Dynamic
+ - Static
+ - Native queries
+
+DYNAMIC QUERIES
+Dynamic query is a query that is directly defined in a repository and created using JPQL. To create a dynamic 
+query createQuery method is called on EntityManager.
+Example:
+public List<Book> findAllBooks(){
+      return entityManager.createQuery("select b from Book b",Book.class).getResultList();
+}
+
+
+STATIC QUERIES
+Static query (@NamedQuery) are quires that are defined in the entity class or in metadata file.Static queries
+are declared using @NamedQuery for each query and @NamedQueries({}) for a number of queries.
+Example:
+To declare:
+@NamedQuery(name = "findAllUsers",query="select distinct u from User u left join fetch u.roles")
+
+To use:
+public List<User> findOnlyUsersWithRoles (){
+   Query query = em.createQuery("select distinct u from User u join fetch u.roles");
+   return query.getResultList();
+}
+
+It’s also possible to pass parameters into a dynamic query and static query.
+To pass named parameters:
+public Book findBookById(Long id){
+    return entityManager.createQuery(“select b from Book b where b.id = :id”)
+                        .setParameter(“id”, id)
+                        .getSingeResult();
+}
+
+To pass positional parameters:
+
+public List findWithName(String name) {
+    return em.createQuery(
+        “select b from Book b where b.name like ?1”)
+        .setParameter(1, name)
+        .getResultList();
+}
+
+
+NATIVE QUERIES
+Native quires are queries that are defined in repository and created using SQL.
+Example:
+
+public List<User> findAllUsers(){
+   return  entityManager.createNativeQuery(“select * from user”, User.class).getResultList(); 
+}
+
+
+
