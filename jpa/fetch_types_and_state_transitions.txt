@@ -11,7 +11,10 @@ If you want your collection to be loaded into the memory you need to load it man
 loading several collections eager loading should be avoided as it might lead to performance problems (result set will be big and will contain redundant data). 
 
 A proper way to load an entity and it’s collection is to use join fetch in the query as below:
-	SELECT e FROM Employee e LEFT JOIN FETCH e.address  
+	SELECT e FROM Employee e LEFT JOIN FETCH e.address 
+
+Join Fetch gives you only employees who have addresses
+Left Join Fetch gives all employees including those who don’t have addresses (everything from one side) 
 
 === Cascading state transitions ===
 
