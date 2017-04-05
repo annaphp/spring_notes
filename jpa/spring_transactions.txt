@@ -1,0 +1,33 @@
+Transactions in Spring
+
+Transactions have the following properties:
+
+- Atomicity - All operations within a transaction are completed, the transaction is rolled 
+back if one of the operations fails.
+
+- Consistency - data should be saved always according to the business rules
+
+- Durability - ensures that the result of a committed transaction persists in case of a system failure.
+
+- Isolation - what your transaction sees in relation to changes made by others.
+Isolation enables transactions to operate independently of and transparent to each other. As if there where only one user to use a database.
+
+Isolation Levels:
+- read uncommitted - allows dirty reads, non-repeatable reads, phantom reads
+- read committed - allows non-repeatable reads, phantom reads
+- repeatable read - allows phantom reads only
+- serializable - doesn’t allow dirty reads, non-repeatable reads, phantom reads
+
+Transactions can be local or global. Local transactions work with one database, global 
+with more than one.
+
+Types of transaction management in Spring:
+ - Declarative - using annotations within the code itself.
+ - Programmatic - developer writes code to manage transactions
+
+In Spring, to make a method transactional use @Transactional annotation wich supports
+a number of attributes that can be used to override the default behaviour and specify
+transaction propagation. For example if your method only finds information you can use 
+@Transactional(readOnly=true).
+
+
