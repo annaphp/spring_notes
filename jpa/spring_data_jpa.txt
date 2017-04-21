@@ -2,7 +2,7 @@ Spring Data JPA
 
 Spring Data JPA allows to create automatic repository and no implementation is needed
 by the developer. 
-To enable Spring automatic repository create your a repository interface for your entity
+To enable Spring automatic repository create a repository interface for your entity
 class that has to extend JpaRepository.
 Example:
 //no other code or annotations needed

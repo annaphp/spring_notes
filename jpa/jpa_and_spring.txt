@@ -4,7 +4,7 @@ To be able to use JPA with Spring an entity manager factory bean should be defin
 in Spring application context.
 
 EntityManagerFactory gives you an instance of an EntityManager. 
-There two kinds of entity managers in JPA:
+There are two kinds of entity managers in JPA:
 
  - Application-managed - entity managers are directly created in the application 
    from an entity manager factory. The application is responsible for opening and closing 

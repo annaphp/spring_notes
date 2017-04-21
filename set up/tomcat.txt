@@ -7,6 +7,7 @@ Install Tomcat
 
 Apache Tomcat is a Java HTTP server which can run Java Servlet and Java Server Pages.
 It is also called a servlet container.
+Go to Applications —> tomcat —> bin and then do the following:
 To start: ./startup.sh to stop: ./shutdown.sh
 
 Tomcat installed directory has subdirectories:

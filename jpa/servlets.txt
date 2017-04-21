@@ -1,0 +1,86 @@
+HTTP 
+TCP is resposnsible for making sure that a file sent from one network node to another
+ends up as a complete file at the destination even though the file is split into packets
+when it’s sent.
+IP is underlying protocol that moves the packets from one host to another on their way
+to the destination.
+HTTP depends on TCP/IP to get the complete request and response from one place to another.
+HTTP structure - request/repose sequence, a browser requests and a server responds
+
+HTTP response contains a header and content. A browser uses the header info to help process the HTML page.
+HTTP request contains an HTTP method name (GET/POST) and content.
+
+Servlet - a web server helper app that generates dynamic pages to be sent in response
+JSP  (JavaServer Pages) - used to write dynamically generated web pages,(java is inserted in HTML using JSP)
+
+Servlets don’t have a main() method. They are under the control of another Java application called a Container. Tomcat is a Container.When your web server application
+(Apache) gets a request for a servlet (request for a dynamic page) the server hands
+the request to the Container in which the servlet is deployed. The Container gives the
+servlet the HTTP request and response, and the Container calls the servlet’s methods
+(doPost() and doGet()).
+Container handles:
+ - communication support - gives an easy way for your servlets to talk to your web server.
+ - lifecycle management of your servlet
+ - multithreading support - container creates a new Java thread for every servlet request.
+ - declarative security 
+ - JSP support
+
+Each URL that is in the request is mapped to a servlet and this is how the container knows 
+which servlet to use. 
+A servlet has three names: 
+1. path name (path to an actual class file that includes package and class name)
+2. Deployment name, it’s like special internal name(anyone who deploys the servlet can give it a name) 
+3. public URL name - the name the client knows about
+
+You need these different names because of the security and it also gives you flexibility how
+to organize your class files.
+
+Deployment Descriptor for mapping URLs and Servlets
+When you deploy a servlet to a container you need to create a deployment descriptor document which
+is a xml document which maps actual class name with deployment name, and deployment name with
+URL that client knows.The file is called web.xml and must be placed in tomcat/webapps/AppName/WEB-INF/
+for Tomcat to find it.
+* <servlet> element to map deployment name to path name
+Example:
+<servlet>
+   <servlet-name> deployment name</servlet-name>
+   <servlet-class>foo.Servlet<servlet-class>
+</servlet>
+
+* <servlet-mapping> to map deployment name to public URL name
+Example:
+   <servlet-name> deployment name </servlet-name>
+   <url-pattern>/register<url-pattern>
+<servlet-mapping>
+
+MVC(Model View Controller) Design Pattern takes the business logic out of the servlet and puts it in a Model (Java Classes).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

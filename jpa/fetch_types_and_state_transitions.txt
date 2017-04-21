@@ -20,5 +20,5 @@ Left Join Fetch gives all employees including those who don’t have addresses (
 
 When an entity instance changes it’s state, for example from transient to persistent, 
 it’s associated entity instances may also be included in this state transition - this is 
-called cascading state transitions. To enable cascading state transitions specify CascadeType, there is a number of cascading options available the most commonly used are 
+called cascading state transitions. To enable cascading state transitions specify CascadeType, there is a number of cascading options available, the most commonly used are 
 CascadeType.PERSIST(saves all associated entities) and CascadeType.REMOVE (deletes all associated entities).

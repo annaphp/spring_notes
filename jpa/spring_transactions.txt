@@ -25,7 +25,7 @@ Types of transaction management in Spring:
  - Declarative - using annotations within the code itself.
  - Programmatic - developer writes code to manage transactions
 
-In Spring, to make a method transactional use @Transactional annotation wich supports
+In Spring, to make a method transactional use @Transactional annotation which supports
 a number of attributes that can be used to override the default behaviour and specify
 transaction propagation. For example if your method only finds information you can use 
 @Transactional(readOnly=true).

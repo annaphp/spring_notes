@@ -1,0 +1,97 @@
+Spring MVC
+
+Spring MVC overview:
+ - HTTP requests are handled by DespatcherServlet which is provided by Spring you only
+   need to configure it using DispatcherServletInitializer.
+ - two contexts are created when DispatcherServletInitializer is run: web context and core context
+ - controllers have methods mapped to the certain requests they handle. The methods in controllers call
+   application service methods and return views (UI Model is populated by controllers methods and used in view
+   templates for dynamic parts of the template)
+
+**** Setting up Spring MVC ****
+
+1. Configure DispatcherServlet in JavaConfig (it can also be configured in XML)
+   DispatcherServlet is responsible for routing the requests.
+   When a configuration class that extends AbstractAnnotationConfigDsipatcherServletInitializer is run two contexts are created and 
+DispatcherSevlet is configured.
+Method getServletMappings() identifies a path (can be more than one) that DispatcherServlet 
+will be mapped to.
+Method getServletConfigClass() loads all beans for web context(controllers, view resolvers, handler 
+mappings).
+Method getRootConfigClasses() loads all beans for core/root context
+  Example of config file for DispatcherServlet:
+
+	public class ServletConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+	@Override
+	protected Class<?>[] getRootConfigClasses() {
+		return new Class<?>[]{CoreConfiguration.class};
+	}
+
+	@Override
+	protected Class<?>[] getServletConfigClasses() {
+		return new Class<?>[]{WebConfiguration.class};
+	}
+
+	@Override
+	protected String[] getServletMappings() {
+		return new String[]{“/“};//this is the path DispatcherServlet will be
+                mapped to
+	}
+}
+
+2. Enable Spring MVC components (Spring MVC web context configuration)
+Example of WebConfig file:
+@Configuration
+@EnableWebMvc // enables mvc
+@ComponentScan("web")
+public class WebConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware{
+	
+	private ApplicationContext applicationContext;
+	
+	@Bean
+	public SpringResourceTemplateResolver templateResolver(){
+		SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+		templateResolver.setApplicationContext(this.applicationContext);
+		templateResolver.setPrefix("/WEB-INF/templates/");
+		templateResolver.setSuffix(".html");
+		templateResolver.setCacheable(false);
+		return templateResolver;	
+	}
+	
+	@Bean
+	public SpringTemplateEngine templateEngine(){
+		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		templateEngine.setTemplateResolver(templateResolver());
+		return templateEngine;
+	}
+	
+	@Bean
+        //configuring Thymeleaf View Resolver
+	public ThymeleafViewResolver viewResolver(){
+		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+		viewResolver.setTemplateEngine(templateEngine());
+		return viewResolver;	
+	}
+	
+	@Bean
+	public MultipartResolver multipartResolver() throws IOException{
+		return new StandardServletMultipartResolver();
+	}
+	
+	@Override//configuring static content handling
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer)         {
+		configurer.enable();
+	}
+
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		this.applicationContext = applicationContext;
+	}
+}
+
+**** Controller ****
+
+Controllers are java classes that are annotated with @Controller and @RequestMapping which declares the kind of
+requests they will handle.
+Example:
+@Controller Declared to be a controller public class HomeController {  @RequestMapping(value="/", method=GET)  public String home() {	return "home"; View name is home }  }
