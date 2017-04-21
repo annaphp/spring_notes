@@ -94,4 +94,6 @@ public class WebConfiguration extends WebMvcConfigurerAdapter implements Applica
 Controllers are java classes that are annotated with @Controller and @RequestMapping which declares the kind of
 requests they will handle.
 Example:
-@Controller Declared to be a controller public class HomeController {  @RequestMapping(value="/", method=GET)  public String home() {	return "home"; View name is home }  }
+@Controller 
+public class HomeController {  @RequestMapping(value="/", method=GET)  public String home() {	return "home"; //View name is home 
+  }}
