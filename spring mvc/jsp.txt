@@ -1,0 +1,16 @@
+JSP
+
+<%@ page import=“foo.*,java.util.*” %> - page directive with import attribute (a directive is a way
+to give special instructions to the Container at page translation time; there are three
+directive types: page, include and taglib.
+<%@ include file=“header.html” %> - includes partials like header footer
+<% %> - scrip let, some java code
+<%= %> - expression, will print something can have a literal value(prim types), objects
+or any methods that return something, not void.
+
+<% int count=0 %> - declare local var, the var will be initialized with each new request
+<%! int count=0; %> - declaration - used to declare static(belongs to class) variables and 
+methods
+
+<!—- html comment —->
+<%—- JSP Comment —-%> 

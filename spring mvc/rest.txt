@@ -1,0 +1,9 @@
+SPRING REST (REPRESENTATIONAL STATE TRANSFER)
+REST - transferring the state of resources (usually in JSON format) from a server to a 
+client or vise versa.
+In REST actions are defined by HTTP methods, the HTTP methods are often mapped to CRUD
+verbs as follows:
+ - create - POST
+ - read - GET
+ - update - PUT
+ - delete - DELETE
