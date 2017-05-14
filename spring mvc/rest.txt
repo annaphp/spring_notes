@@ -1,11 +1,13 @@
 SPRING REST (REPRESENTATIONAL STATE TRANSFER)
 REST - transferring the state of resources (usually in JSON format) from a server to a 
 client or vise versa.
-To enable REST in Spring you need to configure ViewResolver to return JSON format instead
-of HTML.
+
 There are two sides you can be on when using REST - producer and consumer (sometimes both).
 If you are a producer (meaning sends data and receives user’s responses through a form)
 You need to configure REST in your application by doing the following:
+
+To enable REST in Spring you need to configure ViewResolver to return JSON format instead
+of HTML.
 
 In Spring there are two ways to transform data into a desired format (JSON) in which
 data will be shipped to the client:
