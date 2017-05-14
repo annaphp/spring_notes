@@ -28,4 +28,56 @@ Before you will be able to configure a configure(AuthenticationManagerBuilder) m
 you need to create User.java which should implement UserDetails interface, UserRepository for CRUD operations and UserService which should implement UserDetailsService.
 
 
-@Configuration@EnableWebSecuritypublic class SecurityConfig extends WebSecurityConfigurerAdapter {}
+Example of a web security configuration:
+
+@Configuration
+@EnableWebSecurity 
+@ComponentScan("core") // WebSecurityConfig needs user details service and password encoder from core context
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+	
+	@Autowired
+	UserDetailsService userService;
+	
+	@Autowired
+        PasswordEncoder passwordEncoder;
+	
+	@Autowired
+        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
+        }
+
+        @Override
+        public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/assets/**");
+        }
+	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+
+		http
+		  .formLogin().defaultSuccessUrl("/books/all", true)
+		    .loginPage("/login") // custom login page 
+		    .permitAll()
+		  .and()
+		  .authorizeRequests()
+		    .antMatchers(“/create”,”/edit/**").hasRole("USER")		  
+		    .and()
+		    .logout()
+    	          .logoutSuccessUrl(“/home”) 
+		  .and()
+		  .csrf();  
+	 }	
+}
+
+Method Security Configuration
+To enable method security create a configuration file annotated with @EnableGlobalMethodSecurity(securedEnabled=true).
+Example:
+@Configuration
+@EnableGlobalMethodSecurity(securedEnabled=true)
+public class MethodSecurityConfig
+extends GlobalMethodSecurityConfiguration {}
+
+And to add security to a method use @Secured annotation, as shown below:
+@Secured({"ROLE_ADMIN"})
+public void addUser(User user) {…}
+
