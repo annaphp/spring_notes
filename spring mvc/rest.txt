@@ -1,17 +1,19 @@
 SPRING REST (REPRESENTATIONAL STATE TRANSFER)
-REST - transferring the state of resources (usually in JSON format) from a server to a 
+
+REST Web Service - transferring the state of resources (usually in JSON format) from a server to a 
 client or vise versa.
 
 There are two sides you can be on when using REST - producer and consumer (sometimes both).
-If you are a producer (meaning sends data and receives user’s responses through a form)
-You need to configure REST in your application by doing the following:
+
+If you are a **producer** (meaning send data after GET request and receive data from POST, client’s request),
+you need to configure REST in your application by doing the following:
 
 To enable REST in Spring you need to configure ViewResolver to return JSON format instead
 of HTML.
 
 In Spring there are two ways to transform data into a desired format (JSON) in which
 data will be shipped to the client:
- 1. Content negotiation - a view is selected that can render the data into a desired
+ 1. Content negotiation (rarely used)- a view is selected that can render the data into a desired
     format to be served to the client.(A view for each format, for example a view named
     products can be in HTML and JSON format).
     To render the right view (the view with correct view name and format) you need to
@@ -34,14 +36,14 @@ data will be shipped to the client:
 	@Autowired
 	ProductService service;
 
-    	@RequestMapping(value="/products", method=RequestMethod.GET,produces="application/json")
+    	@RequestMapping(value="/products", method=RequestMethod.GET, produces="application/json")
 	public List<Product> findAll(){
 		return service.findAll();
         }
     }
 
-If you are on the consumer side of the REST (only requesting information in JSON or other format).
-Then you need to have a controller that would request information by sending requests to a URL(endpoints)and with a help of Spring RestTemplate the received data will be converted to an object automatically.(no other configuration is required).
+If you are on the **consumer** side of the REST (only requesting information in JSON or other format).
+Then you need to have a service class that would request information by sending requests to a URL(endpoints)and with a help of Spring RestTemplate the received data will be converted to an object automatically.(no other configuration is required).
 
 Example of a simple RESTConsumer controller:
 
