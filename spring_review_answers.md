@@ -86,8 +86,16 @@ XML:
 ## JDBC
 
 Describe JDBC without spring
-
-
+ - JDBC DriverManager class gives you connection with DB, DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "username", "password");
+ - Connection allows you create statements -> Statement statement = connection.createStatement();
+ - You can execute statements using statement object -> statement.execute("insert into cart values("+cart.getId()+
+   +", '" + cart.getDescription() +"' )");
+ - To read from DB -> ResultSet rs = stmt.executeQuery("select *  from cart where id =" + id +";");
+   then you need save your object from resultSet -> Cart c = null;
+						    if(rs.next()){
+							c = new Cart(rs.getInt("id"), rs.getString("description"));	
+						     }
+ 
 Describe how to perform joins in SQL(name some common joins)
 - Inner join - retrives rows form table A and table B that have matching values in both tables. For example:
 	SELECT books.name, authors.name FROM books, authors WHERE authors.id = books.author_id;
@@ -123,12 +131,13 @@ Describe transaction isolation levels
  - Serializable - doesn't allow dirty reads, non-repetable reads and phantom reads
 
 Describe how we can model many-to-one relationship in the DB
-many side should have a foreign key collumn reffering to id of one side
+ - many side should have a foreign key collumn reffering to id of one side
 
 Describe how to model many-to-many relationship in the DB
-there should be a third table created to store many-to-many relationship(table one ids and table two ids)
+ - there should be a third table created to store many-to-many relationship(table one ids and table two ids)
 
-Describe Spring's approach to JDBC, name key interfaces/classes
+Describe Spring's approach to JDBC, name key interfaces/classes:
+
 
 
 What is a repository?
