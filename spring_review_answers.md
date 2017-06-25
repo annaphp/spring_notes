@@ -266,25 +266,42 @@ What is JOIN FETCH in JPA?
 - Join Fetch in queries initializes (eagerly loads) the associated entity or collection of entities.
 
 What nuances we need to know about JOIN FETCH? (you run a query without success, despite entities being present in the DB?)
-- 
+
 
 What is spring data JPA?
-
+- Spring Data JPA allows to create automatic repository and no implementation is needed by the developer. 
+  To enable Spring automatic repository create a repository interface for your entity class that has to extend JpaRepository.
+  
 How to configure JPA in Spring without Spring Data JPA: describe all needed beans.
-
+- To be able to use JPA with Spring an entity manager factory bean should be defined in Spring application context.
+  EntityManagerFactory gives you an instance of an EntityManager. 
+- You will need the following beans to be defined in your configuration file:
+	- DataSource to connect to database
+	- JpaVendorAdapter provides specifics for EntityManager about the particular JPA implementation (Hybername or other)
+	- LocalContainerEntityManagerFactoryBean - provides an EntityManager bean  which will scan 
+	  the model package for classes that are annotated with @Entity
+	-  PlatformTransactionManager - TransactionManager
+	- BeanPostProcessor - enables persistence exception translation
+	- PersistenceAnnotationBeanPostProcessor 
+	
+  
 ## Transactions
 
 What is a transaction?
+- Unit of work
 
 How does spring handle transactions?
+- Transaction Manager 
 
 What 2 main types of transaction do we have?
+- Declarative - using annotations within the code itself.
+- Programmatic - developer writes code to manage transactions
 
 What is JTA transaction manager? When do we need it? Name 2 JTA transaction managers.
 
 2 main ways to manage transactions?
 
-Describe Java exception hierarchy, what are checkec/unchecked exceptions?
+Describe Java exception hierarchy, what are checked/unchecked exceptions?
 
 In spring declarative transactions, when is transaction marked for rollback?
 
