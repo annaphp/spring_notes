@@ -184,8 +184,8 @@ What are entities?
 Name entity states
 - Transient (new not saved)
 - Persistent, managed (saved, there is a row in db associated with this object)
-- detached (retrieved from db, and changes are not synchronized with db)
-- removed - to be deleted
+- Detached (retrieved from db, and changes are not synchronized with db)
+- Removed - to be deleted
 
 What are value types? (Basic types like String and classes annotated with @Embeddable)
  - @Embeddable can be other classes, Int, Long.
@@ -195,34 +195,78 @@ How can an entity store its collection of values types, what about one value typ
   @ElementCollection is also used to store a collection of @Embedable 
   
 Name 2 main types of relationships between entities?
+- unidirectional and bidirectional
 
-Name 4 main cardinalities.
+Name 4 main cardinalities
+- One to many, many to one, many to many, one to one
 
 Name 7 possible combinations of cardinalities and directions. Why there are only 7 and not 8?
+- Unidir - one to one
+- unidir - one to many
+- unidir - many to one
+- unidir - many to many
+
+- bidir - one to one
+- bidir - many to one (one side is OneToMany and the other is ManyToOne)
+- bidir - many to many
 
 What is unique about unidirectional relations, who owns the relation?
+- In unidirectional relations, one side that owns the relationship has a reference to the 
+  other side, object navigation is one way, the side that has the annotations owns the
+  relationship. Owning side (one side) has to be updated after relationship is created.
 
 What is unique about bidirectional relations? who owns the relations?
-
+- typically many side owns the relationships, the side that has the annotation and doesn’t have
+  mappedby=“fieldNamefromOwningSide” is the relationship owner.The owner side is updated.
+  
 How do we mark an owning side in a bidirectional relation? What is inverse side?
+- With annotation (for example @ManyToOne), the inverse side(the side that doesn’t own the relationship) is
+  annotated and has mappedby that refers to the filed in the class that owns the relationship. 
 
 What is eager/lazy loading?
+- lazy loading is a way of loading collections into a memory, with lazy loading collections are not loaded into the memory,
+  instead they are wrapped into the proxies (placeholder objects), lazily loaded collection items are not
+  initialized and are not loaded into the memory
+- eager loading loads collections into the memory
 
 What is JPQL?
+- Java Persistence Query Language is an object oriented query language that is used to make queries
+  against entities stored in a relational database.
 
 name 2 main types of queries
+- native queries
+- static query(named)
 
 What is @NamedQuery, where do we place it?
-
+- @NamedQuery is an annotation that is used to define a static query, it is planced on the entity class to which this
+  query pertains
+  
 What is native query?
+- queries that are defined in the repository and created using SQL
 
 name 2 types of parameters in JPQL, what simbols each one uses?
+- Named parameters (:name)
+	public Country getCountryByName(EntityManager em, String name) {
+	    TypedQuery<Country> query = em.createQuery(
+		"SELECT c FROM Country c WHERE c.name = :name", Country.class);
+	    return query.setParameter("name", name).getSingleResult();
+	  } 
+
+- ordinal/positional parameters (?index)
+	  public Country getCountryByName(EntityManager em, String name) {
+	    TypedQuery<Country> query = em.createQuery(
+		"SELECT c FROM Country c WHERE c.name = ?1", Country.class);
+	    return query.setParameter(1, name).getSingleResult();
+	  } 
 
 What is pagination?
+- separating a collection of data into pages
 
-What is JOIN FETCH?
+What is JOIN FETCH in JPA?
+- Join Fetch in queries initializes (eagerly loads) the associated entity or collection of entities.
 
 What nuances we need to know about JOIN FETCH? (you run a query without success, despite entities being present in the DB?)
+- 
 
 What is spring data JPA?
 
