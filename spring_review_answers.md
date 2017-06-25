@@ -6,7 +6,8 @@ What is spring
 - Spring is an application framework which main features are dependency injection and aspect oriented programming.
 
 Why use spring over regular Java
- - because of dependecy injections that Spring offers
+ - because of a dependecy injection that Spring offers
+ 
 What is DI?
  - DI stands for a depenedency injection which is a way to provide required refferences (dependencies) to the objects
    in your application.
@@ -86,7 +87,7 @@ XML:
 ## JDBC
 
 Describe JDBC without spring
- - JDBC DriverManager class gives you connection with DB, DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "username", "password");
+ - JDBC DriverManager class gives you connection with DB -> DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "username", "password");
  - Connection allows you create statements -> Statement statement = connection.createStatement();
  - You can execute statements using statement object -> statement.execute("insert into cart values("+cart.getId()+
    +", '" + cart.getDescription() +"' )");
@@ -137,31 +138,62 @@ Describe how to model many-to-many relationship in the DB
  - there should be a third table created to store many-to-many relationship(table one ids and table two ids)
 
 Describe Spring's approach to JDBC, name key interfaces/classes:
-
-
+ - Spring simplifies JDBC use by providing JDBC template which hides DB access boiler plate code.
+   With JdbcTemplate you only need to write code that is related to data manupulation (CRUD).
 
 What is a repository?
-
+ - Repository is a class where CRUD functions are performed, a class that represents persistence layer.
+ 
 What is a datasource? How is it different from drivermanager?
-
+- Datasource represents database connection. It's different from drivermanager because it has a connection pool and 
+  it manages connections (connections are always open and when connection is not used it's put back into the connection pool
+  and is available for other requiests) whereas with drivermanager you need to open/close connections.
+  
 Describe steps to configure JDBC based repository in Spring
+- To enable JdbcTemplate in your application the following steps have to be completed:
+	- set up required dependencies
+	- define Datasource bean in Spring dependency config file
+	  DataSource represents a database, it has a connection pool which contains a set of 
+	  connections. DataSouce requires jdbc driver, database url, database username and password, connection pool initia
+	  and maximum size.
+	- create Repository class for your model with JdbcTemplate field
+	
 
 ## JPA
 
 What is JPA?
+- ORM(Object Relationship Mapping) Specification
 
 What is Hibernate? compare Hibernate and JPA
 
+- Hibernate - ORM framework (it has sessionFactory(you build sessionFactory = buildSessionFactory()),
+  sessionFactory gives you session (sessionFactory.openSession()), on session you can call methods
+  such as session.beginTransaction,  session.getTransaction.commit() and session.close()).
+  
+- In JPA, there is EntityManagerFactory that gives you an instance of EntityManager. EntityManager allows you
+  to persist objects and manage transactions.
+
+JPA is an interface (a standard for ORM), Hibernate is an implementation that satisfies JPA standarts.
+
 Name key classes/interfaces in JPA
+- EntityManagerFactory (defined in config) and  EntityManger (used in Repository)
 
 What are entities?
+- User defined classes instances of which should be stored in db
 
 Name entity states
+- Transient (new not saved)
+- Persistent, managed (saved, there is a row in db associated with this object)
+- detached (retrieved from db, and changes are not synchronized with db)
+- removed - to be deleted
 
 What are value types? (Basic types like String and classes annotated with @Embeddable)
-
+ - @Embeddable can be other classes, Int, Long.
+ 
 How can an entity store its collection of values types, what about one value type?
-
+- Using @ElementCollection you can save a collection of basic Java types such as String,Integer, Long)
+  @ElementCollection is also used to store a collection of @Embedable 
+  
 Name 2 main types of relationships between entities?
 
 Name 4 main cardinalities.
