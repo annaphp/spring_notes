@@ -288,10 +288,10 @@ How to configure JPA in Spring without Spring Data JPA: describe all needed bean
 ## Transactions
 
 What is a transaction?
-- Unit of work
+- Unit of work,that cannot be partially completed, if one of the task cannot be completed, the transaction is rolled back.
 
 How does spring handle transactions?
-- Transaction Manager 
+- through AOP
 
 What 2 main types of transaction do we have?
 - Declarative - using annotations within the code itself.
@@ -300,8 +300,12 @@ What 2 main types of transaction do we have?
 What is JTA transaction manager? When do we need it? Name 2 JTA transaction managers.
 
 2 main ways to manage transactions?
+- global (more than one resource/db)
+- local (one resource/db)
 
 Describe Java exception hierarchy, what are checked/unchecked exceptions?
+- There are checked and unchecke exceptions, checked exceptions are checked by JVM and compiler.
+  unchecked are not checked by JVM and thrown during run time.
 
 In spring declarative transactions, when is transaction marked for rollback?
 
