@@ -325,13 +325,14 @@ How to specify Tx propagation level in spring, why do we specify it? give an exa
 - @Transactional(Propagation=REQUIRES_NEW)
 
 Explain, and give examples of, REQUIRES_NEW, REQUIRED, and SUPPORTS propagation levels.
-- REQUIRED_NEW suspends transation of the method it was called from and starts new transaction, the suspended 
+- REQUIRED_NEW suspends transation of the method it was called from and starts a new transaction, the suspended 
 method is continued after the transaction is completed.
-- REQUIRED
-
+- REQUIRED - if a tx method A is called from a tx method B, method A joins B's transaction. If method B is not transactional,
+  method A starts its own transaction.
 
 What is readOnly property of a Tx, what about timeout property?
-
+A method annotated with @Transaction(readOnly = true) only can read data from db.
+time
 What is default Isolation and propagation level in spring transaction?
 
 Present a demo project showcasing Spring transaction details.
