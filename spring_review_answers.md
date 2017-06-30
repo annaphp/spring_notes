@@ -298,22 +298,37 @@ What 2 main types of transaction do we have?
 - Programmatic - developer writes code to manage transactions
 
 What is JTA transaction manager? When do we need it? Name 2 JTA transaction managers.
+JTA transaction manager manages global transactions (Bitronix, Atomikos)
 
 2 main ways to manage transactions?
 - global (more than one resource/db)
 - local (one resource/db)
 
 Describe Java exception hierarchy, what are checked/unchecked exceptions?
-- There are checked and unchecke exceptions, checked exceptions are checked by JVM and compiler.
+- There are checked and unchecke exceptions in Java, checked exceptions are checked by JVM and compiler.
   unchecked are not checked by JVM and thrown during run time.
 
 In spring declarative transactions, when is transaction marked for rollback?
+- When an exception is thrown
 
 How to specify Tx isolation level in Spring? Why do we specify it? Give an example.
 
+@Transactional(isolation=Isolation.READ_COMMITTED)
+We specify isolation level to determine what data our transaction can see, with READ_COMMITED isolation
+level our transation will see commited changes only (no dirty reads).
+
+For example, if we are calculating an average of something, we want to make sure we are basing it on the data 
+that has been commited in order to get an accurate result.
+
+
 How to specify Tx propagation level in spring, why do we specify it? give an example.
+- @Transactional(Propagation=REQUIRES_NEW)
 
 Explain, and give examples of, REQUIRES_NEW, REQUIRED, and SUPPORTS propagation levels.
+- REQUIRED_NEW suspends transation of the method it was called from and starts new transaction, the suspended 
+method is continued after the transaction is completed.
+- REQUIRED
+
 
 What is readOnly property of a Tx, what about timeout property?
 
