@@ -329,16 +329,34 @@ Explain, and give examples of, REQUIRES_NEW, REQUIRED, and SUPPORTS propagation 
 method is continued after the transaction is completed.
 - REQUIRED - if a tx method A is called from a tx method B, method A joins B's transaction. If method B is not transactional,
   method A starts its own transaction.
+- SUPPORTS - if a calling method is transactional, the method that is called joins the calling method's transaction. If the 
+  calling method is not transactional, the called method doesn't create a new transaction.
 
 What is readOnly property of a Tx, what about timeout property?
-A method annotated with @Transaction(readOnly = true) only can read data from db.
-time
+- A method annotated with @Transaction(readOnly = true) only can read data from db.
+- timeout property is used to determine the time limit of how long a transaction can be run, if transaction is
+  not completed in the alloted time limit it's rolled back.
+  
 What is default Isolation and propagation level in spring transaction?
+- Default propagation - REQUIRED
+- Default isolation is determined by the database default settings
 
 Present a demo project showcasing Spring transaction details.
+- For example, we have a performSale() method in our Service method, that consists of two repository methods: decreaseInventory() and recordSale(). The service method, performSale(), has to be annotated with @Transactional so that it could be completedas a unit of work. Without the @Transactional annotation, there is a chance that this method may be completed only partially (due to exceptions thrown during decreaseInventory() and recordSale() methods), which doesn't make sence from a busness logic point of view. The reason of this behaviour is Spring default propagation level REQUIRED.
+All repository methods are transactional by default with REQUIRED propagation level, so when they are called from a
+non-transactinal method, they create their own transaction. This is why it's important to make the service method
+transactional so that repository methods could join the service transaction and as a result the whole service method
+could as a unit of work.
 
 How to configure beans needed for TX support in spring?
-
+In order to enable transactions in your application, annotate your java configuration class with
+@EnableTransactionManagement, and define transactinManager bean:
+	@Bean
+	public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+		JpaTransactionManager transactionManager = new JpaTransactionManager();
+		transactionManager.setEntityManagerFactory(entityManagerFactory);
+		return transactionManager;
+	}
 What role does repository play in spring transactions?
 
 What role does service play in spring transactions? Give an example.
