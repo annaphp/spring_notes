@@ -349,46 +349,67 @@ transactional so that repository methods could join the service transaction and 
 could as a unit of work.
 
 How to configure beans needed for TX support in spring?
-In order to enable transactions in your application, annotate your java configuration class with
-@EnableTransactionManagement, and define transactinManager bean:
+
+- In order to enable transactions in your application, annotate your java configuration class with
+  @EnableTransactionManagement, and define transactinManager bean:
 	@Bean
 	public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
 		transactionManager.setEntityManagerFactory(entityManagerFactory);
 		return transactionManager;
 	}
+	
 What role does repository play in spring transactions?
+Repository is a place where transactions begin.
 
 What role does service play in spring transactions? Give an example.
+Service calls transactional methods from repository.
 
 
 ## MVC
 
 What is servlet?
+- is a program that handles HTTP requests and responses
 
 What 2 main abstractions are used with servlet?
+- web context and core context
 
 What is servlet container? One example of.
+- is a web server that maintains a lifecycle of a servlet, Tomcat is a servlet container
 
 What is JSP?
+- JavaServer Pages allows to create dinamyc web pages.
 
 What is dispatch servlet?
+- DispatcherServlet receives HTTP requiests and responses. It is responsible for routing the requests.
 
 Who creates dispatch servlet?
+Spring creates DispatcherServlet you just need to configure it with DiscpatchServletIntializer
 
 What is AbstractAnnotationConfigDispatcherServletInitializer?
+- It is an implementation of WebApplicationInitializer interface that is used to star our web application
 
 What 3 main actions does AbstractAnnotationConfigDispatcherServletInitializer perform?
+- configures DispatcherServlet (identifies a path DispatcherServlet will be mapped to)
+- creates core context and loads it's beans
+- creates web context and loads it's beans
 
 How does container find AbstractAnnotationConfigDispatcherServletInitializer?
+- Servlet container (Tomcat) looks for any classes that implement ServletContainerInitializer interface,
+  AbstractAnnotationConfigDispatcherServletInitializer implements WebApplicationInitializer which implements 
+  ServletContainerInitializer.
 
 What 2 main contexts are need for SpringMVC?
+- core context and web context
 
 What is the relationship between 2 main contexts in SpringMVC?
+- core and web context can access each other's beans
 
 What functionality logically belongs to the root(core) context? Name a few bean types that live there.
+- application business logic beans and persistence layer beans. (Repository, Service Beans)
 
 What functionality logically belongs to the web context? Name a few bean types that live there.
+- controller, view beans and all beans related to Web component of the application.
 
 How to configure web context? 
 
