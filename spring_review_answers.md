@@ -435,89 +435,128 @@ How to configure a controller? What annotation can we have in a controller?
 - @Controller
 
 What is ui.model?
-- is a model that is used in view
+- is ui.model holds an object that is passed from a conroller into a view 
 
 What is a view template?
+- is an incomplete view that is completed with dinamically rendered data
 
 What is a templating engine.
+- View template engine allows to organize view pages and get rid of redundant code.
 
 How is ui.model used with templating engines?
+- ui.model used to populate dinamically rendered parts of the view template
 
 What 2 main http methods do you know? 
+- GET, POST
 
 What is the difference between 2 main http method?
+- GET – retrieves data and has no other effect
+- POST – server accepts and processes data; commonly used with forms
+
 
 ## REST
 
 What is REST?
+- REST (Representational State Transfer) Web Service - transferring the state of resources (usually in JSON format) from a server to a client or vise versa.
 
 What do we mean by 'state'
+- "state" reffers to the state of the resource (application entities)
 
 Who are the main users of the REST?
+- other applications
 
 what is http request header?
+- it key value pairs that contain information about the browser, data, and page content
 
-What is content negotiation?
+What is a content negotiation?
+- is one of the ways to transform the data to be transferred into a desired format. With content negotiation there is a 
+view for each type of format (for example, a view in html and the same view in JSON).
 
 What is message conversion?
+- is another way to transform the data into a desired format. There is a message converter in Spring
+  that translates an object returned from the controller into a desired format to be served to the client.
+  (data produced by  the controller is transformed into a desired type)
 
 What role does view resolver play in message conversion in REST?
+- none, view resolver is used in a content negotiation not message conversion
 
 What 2 main roles exist in REST web service?
+- client and server
 
 What does it mean to be an endpoint?
+- it means you are a server that receives client requests and sends responses 
+  (enpoint is URL where REST clients send requests)
 
 What does it mean to be an endpoint consumer?
+- REST clients send their requests to URLs(server endpoints) and receive data.
+  (Spring RestTemplate gets and posts data)
 
 What is a REST template?
+Spring RestTemplate converts received data into an object
 
 How to use REST template to GET resource?
+- Result[] response = new RestTemplate().getForObject(getAllUrl, Product[].class);
 
 How to use REST template to POST resource? What does it mean to post a resource?
-
+- RestTemplate().postForObject(postUrl, c, Contact.class)
+To post a resource means to create a resource on that URL(endpoint)
 
 ## Security
 
 What 2 main approaches does spring security use to secure our applications?
+- web request level (Servlet filter)
+- method level
 
 What is an authority?
+- authority or in other words user role(ADMIN, VISITOR) determines what resources the user should have access to
 
 What is a cookie?
+- data stored(key value pairs) about a user on the client-side (browser)
 
 What is a session?
+- data stored accross multiple http requests on a servers side. A user is assigned an id which is send with each request
+to the server in order to identify the user.
 
 What 2 main interfaces help spring security understand a user based on the username? 
+- UserDetails and UserDetailsService
 
 How can we implement these 2 main interfaces in our application?
+- User class implements UserDetails interface (this is a class that represents User)
+- UserService class implements UserDetailsService (this is a class that works with UserRepository and responsible for 
+  user persistence operations)
 
 What is a password encoder?
+- a bean that encodes user's password so it could be saved in db
 
 Describe main url routes used by spring security
+- /login and /logout for default log in and log out pages
 
 What is a success/failure handler?
+- success/failure handler determine where user is redirected on successful/failed login and logout
 
 How to utilize spring security in views? 
+- we can have different parts of view renderred based on user role
 
 Explain each line of the following code:
 
-	@Configuration
-	@EnableWebSecurity
+	@Configuration//states that this is a config file
+	@EnableWebSecurity// enables web security
 	public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 		@Autowired
-		UserDetailsService userService;
+		UserDetailsService userService; // userService autowired
 
-		@Bean
+		@Bean//declaring passwordEncoder bean
 		public PasswordEncoder passwordEncoder() {
 			return new BCryptPasswordEncoder();
 		}
 
-		@Autowired
+		@Autowired// wires userService and passwordEncoder into Spring Security
 		public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 			auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
 		}
 
-		@Override
+		@Override// overrides request level default security, allows access to this URL to all users
 		public void configure(WebSecurity web) throws Exception {
 			web.ignoring().antMatchers("/assets/**");
 		}
@@ -527,35 +566,37 @@ Explain each line of the following code:
 		protected void configure(HttpSecurity http) throws Exception {
 			http
 				.authorizeRequests()
-				.antMatchers("/admin/**").hasRole("ADMIN") // order is important
-				.antMatchers("/**").hasAnyRole("ADMIN", "USER")
+				.antMatchers("/admin/**").hasRole("ADMIN") // specifies what roles can have access to this url
+				.antMatchers("/**").hasAnyRole("ADMIN", "USER")//specifies what roles can have access to this url
 			.and()
 				.formLogin()
-				.loginPage("/login")
-				.permitAll()
+				.loginPage("/login")//overrides default login page
+				.permitAll()//gives access to log in page to all users
 			.successHandler(
-		(request, response, authentication) -> response.sendRedirect("/main"))
+		(request, response, authentication) -> response.sendRedirect("/main"))//where to redirect on successful login
 			.failureHandler(
-		(request, response, authentication) -> response.sendRedirect("/login"))
+		(request, response, authentication) -> response.sendRedirect("/login"))//where to redirect on failed login
 			.and()
-				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/").deleteCookies("JSESSIONID")
-				.invalidateHttpSession(true)
+				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))//use /logout to logout
+				.logoutSuccessUrl("/").deleteCookies("JSESSIONID")//destroy session id when logged out
+				.invalidateHttpSession(true)//destroy session
 			.and()
-				.csrf();
+				.csrf();//enable default csrf tokens on all forms
 		}
 	}
 
 What is method security?
+- is security settings on a method level
 
 What does this do:
 
 	@Secured({"ROLE_ADMIN"})
+	- sets up security on a method, this method is for users with role admin
 	
 Explain each line of this code:
 
-	@Configuration
-	@EnableGlobalMethodSecurity(securedEnabled=true)
+	@Configuration// indicates that this is a config class
+	@EnableGlobalMethodSecurity(securedEnabled=true) //enables method security
 	public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {}
 	
 
