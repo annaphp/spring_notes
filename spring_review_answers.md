@@ -387,7 +387,7 @@ Who creates dispatch servlet?
 Spring creates DispatcherServlet you just need to configure it with DiscpatchServletIntializer
 
 What is AbstractAnnotationConfigDispatcherServletInitializer?
-- It is an implementation of WebApplicationInitializer interface that is used to star our web application
+- It is an implementation of WebApplicationInitializer interface that is used to start our web application
 
 What 3 main actions does AbstractAnnotationConfigDispatcherServletInitializer perform?
 - configures DispatcherServlet (identifies a path DispatcherServlet will be mapped to)
@@ -420,16 +420,22 @@ How to configure web context?
 	
 
 What is view resolver? 
+- View Resolver is a bean that maps view names with actual views and renders views.
 
 What is servlet filter? How is it similar to AOP?
+- With a servlet filter you can intercept http requests.
 
 Describe request flow through SpringMVC framework, in as much details as possible, draw a diagram.
+- DispatcherServlet receives a requests, and with a help of hendler mapping it sends the request to the appropriate controller. Controller processes the request and returns a view. ViewResolver maps a view name with an actual view and returns that view.
 
 What is a controller?
+- Controller is a class that processes the http requests and returns view names.
 
 How to configure a controller? What annotation can we have in a controller?
+- @Controller
 
 What is ui.model?
+- is a model that is used in view
 
 What is a view template?
 
