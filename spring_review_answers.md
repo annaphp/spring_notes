@@ -6,26 +6,26 @@ What is spring
 - Spring is an application framework which main features are dependency injection and aspect oriented programming.
 
 Why use spring over regular Java
- - because of a dependecy injection that Spring offers
+ - because of a dependency injection that Spring offers
  
 What is DI?
- - DI stands for a depenedency injection which is a way to provide required refferences (dependencies) to the objects
+ - DI stands for a dependency injection which is a way to provide required references (dependencies) to the objects
    in your application.
 
 3 ways to configure spring container, describe each in detail
  - Java Cofiguration - a Java configuration class is created annotated with @Configuration where beans are created and 
    dependancies are defined.(Use @Bean to declare a bean)
- - Autowiring and Component Scan - to enable autowiring and component scan, create a configuratin java class that should
+ - Autowiring and Component Scan - to enable autowiring and component scan, create a configuration java class that should
    be annotated with @Configuration and @ComponentScan (you can also create xml config file and enable componentScan in
-   there). @Component annotation is used to label all classes for wich a bean should be created by Spring. To provide a 
+   there). @Component annotation is used to label all classes for which a bean should be created by Spring. To provide a 
    reference to an object (DI) @Autowired is used.
- - XML configuration - xml file is used to configure srping container, create an xml file and declare beans in there using
+ - XML configuration - xml file is used to configure spring container, create an xml file and declare beans in there using
    <bean> element. 
 
 describe default bean naming in all 3 configuration types, and how to override these defaults
  - Java Configuration - default name is @Bean annotated method name,  to override default name  - @Bean(name="newName")
  - Autowiring and ComponentScan - default name is a class name in lowercase, to override default name - @Component("newName")
- - XML configuarion - default name is a class name#number, to override default name use id attribute - <bean id="newName"   class="MyClass"/>
+ - XML configuration - default name is a class name#number, to override default name use id attribute - <bean id="newName"   class="MyClass"/>
 
 name all possible ways to mix configurations in spring
   - Beans declared in xml config and java config are available in Autowiring, thus Autowiring can be mixed with Java and xml 
@@ -98,11 +98,11 @@ Describe JDBC without spring
 						     }
  
 Describe how to perform joins in SQL(name some common joins)
-- Inner join - retrives rows form table A and table B that have matching values in both tables. For example:
+- Inner join - retrieves rows form table A and table B that have matching values in both tables. For example:
 	SELECT books.name, authors.name FROM books, authors WHERE authors.id = books.author_id;
-- Left Join - retrives all rows form table A even if there are no matching rows in table B. For example:
+- Left Join - retrieves all rows form table A even if there are no matching rows in table B. For example:
 	SELECT books.name, authors.name FROM books LEFT JOIN authors ON books.author_id = authors.id;
-- Right Join - retrives all rows from table B even if there are no matching rows in table A. For example:
+- Right Join - retrieves all rows from table B even if there are no matching rows in table A. For example:
 	SELECT books.name, authors.name FROM books RIGH JOIN authors ON books.author_id = authors.id;
 	
 
@@ -120,19 +120,19 @@ back if one of the operations fails.
 Isolation enables transactions to operate independently of and transparent to each other.
 
 Describe 3 concurrency phenomenas that can be observed in the database
- - dirty read - your transaction sees uncommited changes
+ - dirty read - your transaction sees uncommitted changes
  - non-repeatable read - when you read the same row in your transaction twice and get different results
  - phantom read - when you calculate a value based on the number of rows in your transaction twice and get a different result
    because extra rows were added by another user
 
 Describe transaction isolation levels
- - Read Uncomitted - allows dirty read, non-repetable reads and phantom reads
- - Read Commited - allows non-repetable and phantom reads
- - Repetable read - allows phantom reads only
+ - Read uncommitted - allows dirty read, non-repeatable reads and phantom reads
+ - Read Committed - allows non-repeatable and phantom reads
+ - Repeatable read - allows phantom reads only
  - Serializable - doesn't allow dirty reads, non-repetable reads and phantom reads
 
 Describe how we can model many-to-one relationship in the DB
- - many side should have a foreign key collumn reffering to id of one side
+ - many side should have a foreign key column referring to id of one side
 
 Describe how to model many-to-many relationship in the DB
  - there should be a third table created to store many-to-many relationship(table one ids and table two ids)
@@ -147,14 +147,14 @@ What is a repository?
 What is a datasource? How is it different from drivermanager?
 - Datasource represents database connection. It's different from drivermanager because it has a connection pool and 
   it manages connections (connections are always open and when connection is not used it's put back into the connection pool
-  and is available for other requiests) whereas with drivermanager you need to open/close connections.
+  and is available for other requests) whereas with drivermanager you need to open/close connections.
   
 Describe steps to configure JDBC based repository in Spring
 - To enable JdbcTemplate in your application the following steps have to be completed:
 	- set up required dependencies
 	- define Datasource bean in Spring dependency config file
 	  DataSource represents a database, it has a connection pool which contains a set of 
-	  connections. DataSouce requires jdbc driver, database url, database username and password, connection pool initia
+	  connections. DataSouce requires jdbc driver, database url, database username and password, connection pool initial
 	  and maximum size.
 	- create Repository class for your model with JdbcTemplate field
 	
@@ -173,7 +173,7 @@ What is Hibernate? compare Hibernate and JPA
 - In JPA, there is EntityManagerFactory that gives you an instance of EntityManager. EntityManager allows you
   to persist objects and manage transactions.
 
-JPA is an interface (a standard for ORM), Hibernate is an implementation that satisfies JPA standarts.
+JPA is an interface (a standard for ORM), Hibernate is an implementation that satisfies JPA standards.
 
 Name key classes/interfaces in JPA
 - EntityManagerFactory (defined in config) and  EntityManger (used in Repository)
@@ -238,13 +238,13 @@ name 2 main types of queries
 - static query(named)
 
 What is @NamedQuery, where do we place it?
-- @NamedQuery is an annotation that is used to define a static query, it is planced on the entity class to which this
+- @NamedQuery is an annotation that is used to define a static query, it is placed on the entity class to which this
   query pertains
   
 What is native query?
 - queries that are defined in the repository and created using SQL
 
-name 2 types of parameters in JPQL, what simbols each one uses?
+name 2 types of parameters in JPQL, what symbols each one uses?
 - Named parameters (:name)
 	public Country getCountryByName(EntityManager em, String name) {
 	    TypedQuery<Country> query = em.createQuery(
@@ -305,7 +305,7 @@ JTA transaction manager manages global transactions (Bitronix, Atomikos)
 - local (one resource/db)
 
 Describe Java exception hierarchy, what are checked/unchecked exceptions?
-- There are checked and unchecke exceptions in Java, checked exceptions are checked by JVM and compiler.
+- There are checked and unchecked exceptions in Java, checked exceptions are checked by JVM and compiler.
   unchecked are not checked by JVM and thrown during run time.
 
 In spring declarative transactions, when is transaction marked for rollback?
@@ -315,7 +315,7 @@ How to specify Tx isolation level in Spring? Why do we specify it? Give an examp
 
 @Transactional(isolation=Isolation.READ_COMMITTED)
 We specify isolation level to determine what data our transaction can see, with READ_COMMITED isolation
-level our transation will see commited changes only (no dirty reads).
+level our transaction will see committed changes only (no dirty reads).
 
 For example, if we are calculating an average of something, we want to make sure we are basing it on the data 
 that has been commited in order to get an accurate result.
@@ -325,7 +325,7 @@ How to specify Tx propagation level in spring, why do we specify it? give an exa
 - @Transactional(Propagation=REQUIRES_NEW)
 
 Explain, and give examples of, REQUIRES_NEW, REQUIRED, and SUPPORTS propagation levels.
-- REQUIRED_NEW suspends transation of the method it was called from and starts a new transaction, the suspended 
+- REQUIRED_NEW suspends transaction of the method it was called from and starts a new transaction, the suspended 
 method is continued after the transaction is completed.
 - REQUIRED - if a tx method A is called from a tx method B, method A joins B's transaction. If method B is not transactional,
   method A starts its own transaction.
@@ -335,16 +335,16 @@ method is continued after the transaction is completed.
 What is readOnly property of a Tx, what about timeout property?
 - A method annotated with @Transaction(readOnly = true) only can read data from db.
 - timeout property is used to determine the time limit of how long a transaction can be run, if transaction is
-  not completed in the alloted time limit it's rolled back.
+  not completed in the allotted time limit it's rolled back.
   
 What is default Isolation and propagation level in spring transaction?
 - Default propagation - REQUIRED
 - Default isolation is determined by the database default settings
 
 Present a demo project showcasing Spring transaction details.
-- For example, we have a performSale() method in our Service method, that consists of two repository methods: decreaseInventory() and recordSale(). The service method, performSale(), has to be annotated with @Transactional so that it could be completedas a unit of work. Without the @Transactional annotation, there is a chance that this method may be completed only partially (due to exceptions thrown during decreaseInventory() and recordSale() methods), which doesn't make sence from a busness logic point of view. The reason of this behaviour is Spring default propagation level REQUIRED.
+- For example, we have a performSale() method in our Service method, that consists of two repository methods: decreaseInventory() and recordSale(). The service method, performSale(), has to be annotated with @Transactional so that it could be completed as a unit of work. Without the @Transactional annotation, there is a chance that this method may be completed only partially (due to exceptions thrown during decreaseInventory() and recordSale() methods), which doesn't make sense from a business logic point of view. The reason of this behaviour is Spring default propagation level REQUIRED.
 All repository methods are transactional by default with REQUIRED propagation level, so when they are called from a
-non-transactinal method, they create their own transaction. This is why it's important to make the service method
+non-transactional method, they create their own transaction. This is why it's important to make the service method
 transactional so that repository methods could join the service transaction and as a result the whole service method
 could as a unit of work.
 
@@ -378,10 +378,10 @@ What is servlet container? One example of.
 - is a web server that maintains a lifecycle of a servlet, Tomcat is a servlet container
 
 What is JSP?
-- JavaServer Pages allows to create dinamyc web pages.
+- JavaServer Pages allows to create dinamic web pages.
 
 What is dispatch servlet?
-- DispatcherServlet receives HTTP requiests and responses. It is responsible for routing the requests.
+- DispatcherServlet receives HTTP requests and responses. It is responsible for routing the requests.
 
 Who creates dispatch servlet?
 Spring creates DispatcherServlet you just need to configure it with DiscpatchServletIntializer
@@ -435,16 +435,16 @@ How to configure a controller? What annotation can we have in a controller?
 - @Controller
 
 What is ui.model?
-- is ui.model holds an object that is passed from a conroller into a view 
+- is ui.model holds an object that is passed from a controller into a view 
 
 What is a view template?
-- is an incomplete view that is completed with dinamically rendered data
+- is an incomplete view that is completed with dynamically rendered data
 
 What is a templating engine.
 - View template engine allows to organize view pages and get rid of redundant code.
 
 How is ui.model used with templating engines?
-- ui.model used to populate dinamically rendered parts of the view template
+- ui.model used to populate dynamically rendered parts of the view template
 
 What 2 main http methods do you know? 
 - GET, POST
@@ -457,10 +457,10 @@ What is the difference between 2 main http method?
 ## REST
 
 What is REST?
-- REST (Representational State Transfer) Web Service - transferring the state of resources (usually in JSON format) from a server to a client or vise versa.
+- REST (Representational State Transfer) Web Service - transferring the state of resources (usually in JSON format) from a server to a client or vice versa.
 
 What do we mean by 'state'
-- "state" reffers to the state of the resource (application entities)
+- "state" refers to the state of the resource (application entities)
 
 Who are the main users of the REST?
 - other applications
@@ -485,7 +485,7 @@ What 2 main roles exist in REST web service?
 
 What does it mean to be an endpoint?
 - it means you are a server that receives client requests and sends responses 
-  (enpoint is URL where REST clients send requests)
+  (endpoint is URL where REST clients send requests)
 
 What does it mean to be an endpoint consumer?
 - REST clients send their requests to URLs(server endpoints) and receive data.
@@ -514,7 +514,7 @@ What is a cookie?
 - data stored(key value pairs) about a user on the client-side (browser)
 
 What is a session?
-- data stored accross multiple http requests on a servers side. A user is assigned an id which is send with each request
+- data stored across multiple http requests on a servers side. A user is assigned an id which is send with each request
 to the server in order to identify the user.
 
 What 2 main interfaces help spring security understand a user based on the username? 
@@ -535,7 +535,7 @@ What is a success/failure handler?
 - success/failure handler determine where user is redirected on successful/failed login and logout
 
 How to utilize spring security in views? 
-- we can have different parts of view renderred based on user role
+- we can have different parts of view rendered based on user role
 
 Explain each line of the following code:
 
