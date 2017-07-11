@@ -4,6 +4,7 @@
 
 What is spring
 - Spring is an application framework which main features are dependency injection and aspect oriented programming.
+  With dependency injection we can wire different parts of application to create a complete application.
 
 Why use spring over regular Java
  - because of a dependency injection that Spring offers
