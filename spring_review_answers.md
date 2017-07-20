@@ -31,12 +31,12 @@ describe default bean naming in all 3 configuration types, and how to override t
 name all possible ways to mix configurations in spring
   - Beans declared in xml config and java config are available in Autowiring, thus Autowiring can be mixed with Java and xml 
     configuration
-  - Java Configuration can be mixed with xml config or another java config. To import beans from another java config file 
-    into a java config use @Import(AnotherJavaConfig.class), to import beans from xml file into a java config use
-    @ImportResource("xmlConfig.xml")
-  - XML config can be mixed with java config or another xml config file. To import beans from another xml config file into
-    xml config use <import resource="another-config.xml"/>, to import java config into xml declare java config class as a 
-    bean in xml config using <bean class="JavaConfig" /> element.
+  - Java Configuration can be mixed with xml config, autowiring or another java config. To import beans from another 
+    java config file into a java config use @Import(AnotherJavaConfig.class), to import beans from xml file into a java config 
+    use @ImportResource("xmlConfig.xml")
+  - XML config can be mixed with java config, autowiring or another xml config file. To import beans from another
+  xml config file into xml config use <import resource="another-config.xml"/>, to import java config into xml declare 
+  java config class as a bean in xml config using <bean class="JavaConfig" /> element.
 
 name 4 bean scopes, which ones are pertinent to SpringMVC?
  - Singleton - one per container
