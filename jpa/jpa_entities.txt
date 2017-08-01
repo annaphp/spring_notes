@@ -30,7 +30,7 @@ To specify primary key of an entity annotate id field with @Id annotation:
 Entities and @Embeddable
 #####
 
-An entity can have a field of type annotated with @Embeddable. This field must have @Embedded applied to it.
+An entity can have a field of type annotated with @Embeddable(Address.java class will be annotated with @Embeddable).This field must have @Embedded applied to it.
 
 	@Embedded
 	private Address address;

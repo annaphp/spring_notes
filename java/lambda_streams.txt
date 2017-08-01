@@ -1,0 +1,143 @@
+limit(n)
+	return another stream that that is of size n (argument passed into limit(n)).
+	List<Integers> = Arrays.stream(numbers)
+                               .limit(3).// returns first 3 elements of the stream
+                               .collect(Collectors.toList());
+
+
+skip(n)
+	this method discards the first n elements and returns the rest
+	List<Integers> = Arrays.stream(numbers)
+                               .skip(5).//skips first 5 elements of the steam, if stream has fewer elements than n 
+		         //than empty stream will be returned
+                               .collect(Collectors.toList());
+
+	
+Collector
+	is a public interface that applies a transforming function on a stream an accumulates 
+	the result in a data structure that represents a final output.
+Collectors utility class has a lot of static methods to create an instance of the most common collectors.
+- toList() - gathers all the elements of the stream into a list
+	Stream<String> words = Stream.of(“hello”, “world”);
+	List<Strings> sentence = words.collect(Collectors.toList());
+
+-toSet() - gathers all the elements of the stream into a set (removes duplicates)
+
+	Stream<String> words = Stream.of(“hello”, “world”);
+	Set<Strings> sentence = words.collect(Collectors.toSet());
+
+-toMap() - gathers all the elements of the stream into a map
+
+	Stream<String> words = Stream.of(“hello”, “world”);
+	Map<Strings> sentence = words.collect(Collectors.toMap(s ->s.length(), s -> s); //first param is key, second is value
+	//Functions.identity() is used sometimes and it means the same as s -> s, 
+	//Functions.identity() returns what it receives
+
+-groupingBy() - groups all the elements of the stream by criteria into a map, groupingBy() allows you create 
+	multilevel maps.
+
+	Stream<String> words = Stream.of(“hello”, “world”);
+	words.collect(Collectors.groupingBy(s -> s.length()));//will produce map with key=s.length and value = string
+	words.collect(Collectors.groupingBy(s -> s.length(), groupingBy(s -> s.charAt(0))); // produces a multilevel map
+	where key=string.length and value a map with key = first char
+
+	
+
+-sorted()- sorts the elements of stream using natural ordering.
+	It expects a Comparator object as argument, your can use sort like this:
+	
+	inventory.sort((a1, a2) -> a1.getWeight().compareTo(a2.getWeight())); //
+
+	OR you can use Comparator static helper method - comparing, like this:
+	
+	inventory.sort(Comparator.comparing((a) -> a.getWeight()));//Comparator builder
+
+	OR
+
+	If your element class implements Comparable interface, you can do this:
+
+	words.sort()//string is comparable so this works
+
+distinct() - returns a stream of distinct elements
+
+	words.distinct().collect(Collectors.toList());
+
+map - takes a function as an argument and applies it to each element of the stream and produces a new stream
+	
+	words.map(word -> word.toUpperCase()).collect(Collectors.toList());
+
+filter - takes a function as an argument (this function result returns true or false) and applies it to each element of the stream, the values 
+	that return true are assembled and returned as a new stream.
+
+	words.filter( word -> word.length() > 3).collect(Collectors.toList());
+
+reduce - reduces a collection of values to a single value which is returned as a result. Reduce accepts an accumulator value and
+         a lambda expression.
+
+	int sum = Stream.of(1,2,3).reduce(0, (acc, element) -> acc + element);
+	
+
+Infinite stream - a stream that doesn’t have a fixed size 
+
+create a stream from collection - use stream() method
+	
+	List<String> sentence = new ArrayList<>();
+	sentence.add(“Hello”);
+	sentence.add(“world”);
+	Stream<String> stream = sentence.stream();
+
+Literally define stream - use static method Stream.of()
+
+ 	Stream<Strings> sentence = Stream.of(“Hello”, “world”);
+
+	
+stream from Array - use static method Arrays.stream()
+	
+	int[] numbers = {1, 2, 3, 4};
+	Stream<Integer> stream = Arrays.stream(numbers);
+
+primitive streams - streams containing primitive values such as int, long, double - IntStream, DoubleStream and LongStream.
+		    Each of these three interfaces have methods to perform common numeric operations such as sum and max.
+		    They can be converted back to stream of objects using boxed() method. 
+		    Methods mapToInt, mapToDouble, mapToLong convert an object stream to a primitive type stream.
+
+		    IntStream intStream = menu.stram().mapToInt(dish -> dish.getCalories());
+		    Stream<Integer> stream = intStream.boxed();
+
+
+six types of lambda functional interface - all of them can be represented through lambda expression
+          1. Predicate<T> argument T and returns boolean - applies a test
+		has test(Object) method which returns a boolean value
+		
+          2. Consumer<T> argument T and returns void - represents an operation that accepts a single input argument and returns no result
+
+	  3. Function<T,R> argument T and return R - represents a function that accepts one argument and produces a result
+
+	  4. Supplier<T> no argument and returns T - doesn’t take anything and supplies a result
+
+          5. UnaryOperator<T> argument T and returns T - operation on a single argument and returns a result of the same type as its argument
+
+          6. BinaryOperator<T> (T, T) arguments and returns T - operation on two arguments of the same type, produces a result of the same type 
+	     as arguments
+
+closure method - block of code defining the function and any variables that are referred to by the function, closure captures the state of the 
+		function parameters and free variables, so that their values can be used in the future.
+
+      	public static void main(String[] args){	
+                Consumer<String> sayHello = sayHello(“John”);
+		Stream.of(“one”,”two”).forEach(sayHello);
+
+	}
+	public static Consumer<String> sayHello (String name){
+		return n -> System.out.println(“hi” + name + “all” + n);	
+	}
+
+flat map - replaces each value of a stream with another stream and then concatenates all the generated streams into a single stream.
+	List<String> uniqueCharacters = words.stream()
+					     .map(w -> w.split(“”))
+					     .flatMap(Arrays::stream)
+					     .collect(Collectors.toList());
+                                             
+
+higher order function - is a function that either takes another function as an argument or returns a function as its result. (map, reduce..)
+

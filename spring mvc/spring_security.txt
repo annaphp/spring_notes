@@ -24,7 +24,7 @@ the application specific security points.
 
 If you don’t override any on these methods, all application URLs will require a user authentication.
 
-Before you will be able to configure a configure(AuthenticationManagerBuilder) method
+Before you are able to configure(AuthenticationManagerBuilder) method
 you need to create User.java which should implement UserDetails interface, UserRepository for CRUD operations and UserService which should implement UserDetailsService.
 
 
