@@ -3,6 +3,18 @@ Maven helps with:
  - Project structure
  - Dependency management
 
+Maven downloads dependencies for your project from a central repository into a local repository (.m2 which is located in
+your home directory).There are two main steps in build process - package - executes all steps before package and produces 
+.jar file of your application in target folder, and install - does the same thing as package plus puts your project as a dependency 
+into local repository so that it can be used by the other applications in the future.
+
+command line to produce jar
+	mvn package -DskipTests
+command line to produce jar and this project as dependency in .m2
+	mvn install -DskipTests
+to execute jar file (you can also pass command line arguments that your application requires)
+	java -jar blog-0.0.1-SNAPSHOT.jar
+
 POM file(Project Object Model) xml file is a file that contains project information and 
 configuration details used to build the project:
  - project dependencies
@@ -51,4 +63,8 @@ How to install
 
 1. download Maven and make sure JAVA_HOME is set
 2. in .bash_profile: add variables (M2_HOME and MAVEN_HOME) pointing to the maven installation
-3. in .bash_profile: update PATH variable  
+3. in .bash_profile: update PATH variable 
+
+
+
+ 
