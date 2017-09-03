@@ -9,9 +9,11 @@ your home directory).There are two main steps in build process - package - execu
 into local repository so that it can be used by the other applications in the future.
 
 command line to produce jar
-	mvn package -DskipTests
+	mvn package -DskipTests 
+	
 command line to produce jar and this project as dependency in .m2
 	mvn install -DskipTests
+	
 to execute jar file (you can also pass command line arguments that your application requires)
 	java -jar blog-0.0.1-SNAPSHOT.jar
 
